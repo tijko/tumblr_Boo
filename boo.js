@@ -1,6 +1,8 @@
 //tumblr_Boo --> blocks all tumblr posts you don't want showing on your dashboard.
-// this my first minor program with javascript, so edits and tips from forks welcome :)
+// this my first small program with javascript, so edits and tips from forks welcome :)
 //
+
+
 
 var tumblr_boo = function() {
     post_ctrls = document.getElementsByClassName("post_controls");
@@ -12,14 +14,18 @@ var tumblr_boo = function() {
         boo.onclick = function() {
             post_div = this.parentNode;
             post = post_div.parentNode;
-            localStorage[post.parentNode.id] = "Booed";
+            boo_key = post.parentNode.getAttribute("data-reblog-key");
+            localStorage[boo_key] = "Booed";
             blk_post(post_div); 
         }
         post_ctrls[i].appendChild(boo);
     };
     for (i=0; i<post_ctrls.length; i++) {
         blk_chk = post_ctrls[i].parentNode;
-        if (localStorage[blk_chk.parentNode.id]) {
+        boo_chk = blk_chk.parentNode;
+        //what if posts are re-blogged on same page? 
+        //how to block posts ? refresh?
+        if (localStorage[boo_chk.getAttribute("data-reblog-key")]) {
             ctrl_div = blk_chk.getElementsByClassName("post_controls");
             blk_post(ctrl_div[0]);
         };
@@ -66,8 +72,9 @@ var show_post = function(post) {
     post_wrapper = post.parentNode;
     post_list = post_wrapper.parentNode;
     post_wrapper.nextSibling.style.display = "";
-    if (localStorage[post_wrapper.nextSibling.id]) {
-        delete localStorage[post_wrapper.nextSibling.id];
+    chk_boo = post_wrapper.nextSibling.getAttribute("data-reblog-key");
+    if (localStorage[chk_boo]) {
+        delete localStorage[chk_boo];
     };
     post_list.removeChild(post_wrapper);
 }
