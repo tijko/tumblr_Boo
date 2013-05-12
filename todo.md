@@ -4,8 +4,6 @@
 
 2. Make a jQuery version.
 
-3. Check if re-blog "id" is accounted for.
+3. Make layout for "Un-Boo" button better.
 
-4. Make layout for "Un-Boo" button better.
-
-5. Some nice effects on hide/unhide.
+4. Some nice effects on hide/unhide.
