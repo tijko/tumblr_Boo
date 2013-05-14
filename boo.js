@@ -3,7 +3,6 @@
 //
 
 
-
 var tumblr_boo = function() {
     post_ctrls = document.getElementsByClassName("post_controls");
     for (i=0; i<post_ctrls.length; i++) {
@@ -17,27 +16,21 @@ var tumblr_boo = function() {
             boo_key = post.parentNode.getAttribute("data-reblog-key");
             localStorage[boo_key] = "Booed";
             blk_post(post_div); 
+            post_chk();
         }
         post_ctrls[i].appendChild(boo);
     };
-    for (i=0; i<post_ctrls.length; i++) {
-        blk_chk = post_ctrls[i].parentNode;
-        boo_chk = blk_chk.parentNode;
-        //what if posts are re-blogged on same page? 
-        //how to block posts ? refresh?
-        if (localStorage[boo_chk.getAttribute("data-reblog-key")]) {
-            ctrl_div = blk_chk.getElementsByClassName("post_controls");
-            blk_post(ctrl_div[0]);
-        };
-    };        
+    post_chk();
 }
 
 var blk_post = function(post) {
     boo_post = post.parentNode;
     blk_li = document.createElement("li");
     blk_li.style.boxShadow = "3px 3px 3px black";
+    blk_li.className = "blocked_post_li";
 
     blk_div = document.createElement("div");
+    blk_div.className = "blocked_post_div";
     blk_div.style.border = "1px";
     blk_div.style.height = "45px";
     blk_div.style.textAlign = "center";
@@ -73,10 +66,31 @@ var show_post = function(post) {
     post_list = post_wrapper.parentNode;
     post_wrapper.nextSibling.style.display = "";
     chk_boo = post_wrapper.nextSibling.getAttribute("data-reblog-key");
+    post_wraps = post_list.getElementsByClassName("post_wrapper");
+    for (i=0; i<post_wraps.length; i++) {
+        chk = post_wraps[i].parentNode;
+        post_id = chk.getAttribute("data-reblog-key");
+        if (chk_boo == post_id) {
+            chk.style.display = "";
+            post_list.removeChild(chk.previousSibling);
+        };
+    };
     if (localStorage[chk_boo]) {
         delete localStorage[chk_boo];
     };
     post_list.removeChild(post_wrapper);
+}
+
+var post_chk = function() {
+    post_ctrls = document.getElementsByClassName("post_controls");
+    for (i=0; i<post_ctrls.length; i++) {
+        blk_chk = post_ctrls[i].parentNode;
+        boo_chk = blk_chk.parentNode;
+        if (localStorage[boo_chk.getAttribute("data-reblog-key")] && boo_chk.style.display != "none") {
+            ctrl_div = blk_chk.getElementsByClassName("post_controls");
+            blk_post(ctrl_div[0]);
+        }
+    };
 }
 
 tumblr_boo();
