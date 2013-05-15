@@ -6,4 +6,3 @@
 
 3. Some nice effects on hide/unhide.
 
-4. On "boo" of post, don't page refressh.
