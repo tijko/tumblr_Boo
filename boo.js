@@ -11,7 +11,7 @@ var tumblr_boo = function() {
             boo = document.createElement("a");
             boo.className = "post_control Boo!";
             boo.innerText +=  "Boo!";
-            boo.href = '#';
+            boo.href = 'javascript:';
             boo.onclick = function() {
                 post_div = this.parentNode;
                 post = post_div.parentNode;
@@ -96,10 +96,10 @@ var post_chk = function() {
     };
 }
 
-tumblr_boo();
 window.onscroll = function(ev) {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         tumblr_boo();
     }
 };
-    
+
+tumblr_boo();    
