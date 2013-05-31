@@ -4,20 +4,25 @@
 
 
 var tumblr_boo = function() {
-    post_ctrls = document.getElementsByClassName("post_controls");
+    post_ctrls = document.getElementsByClassName("post_controls_inner");
+// grab all post_wrappers and then loop through those grabbing post_controls_inner
     for (i=0; i<post_ctrls.length; i++) {
         boo_cls = post_ctrls[i].getElementsByClassName("post_control Boo!");
         if (boo_cls.length < 1) {
             boo = document.createElement("a");
+            boo.title = "Block";
             boo.className = "post_control Boo!";
             boo.innerText +=  "Boo!";
             boo.href = 'javascript:';
             boo.onclick = function() {
+                // use this.getElement ....
                 post_div = this.parentNode;
                 post = post_div.parentNode;
-                boo_key = post.parentNode.getAttribute("data-reblog-key");
+                _post = post.parentNode;
+                _post_ = _post.parentNode;
+                boo_key = _post_.parentNode.getAttribute("data-reblog-key");
                 localStorage[boo_key] = "Booed";
-                blk_post(post_div); 
+                blk_post(_post_);
                 post_chk();
             }
             post_ctrls[i].appendChild(boo);
@@ -61,37 +66,37 @@ var blk_post = function(post) {
 
     spot = document.getElementById("posts");
     spot.insertBefore(blk_li, boo_post.parentNode);
-    boo_post.parentNode.style.display = "none";
+    boo_post.style.display = "none";
 }
 
 var show_post = function(post) {
     post_wrapper = post.parentNode;
     post_list = post_wrapper.parentNode;
     post_wrapper.nextSibling.style.display = "";
-    chk_boo = post_wrapper.nextSibling.getAttribute("data-reblog-key");
+    chk_boo = post_wrapper.nextSibling;
+    chk_bo = chk_boo.firstElementChild.getAttribute("data-reblog-key");
     post_wraps = post_list.getElementsByClassName("post_wrapper");
     for (i=0; i<post_wraps.length; i++) {
         chk = post_wraps[i].parentNode;
+        window.alert(chk.className);
         post_id = chk.getAttribute("data-reblog-key");
-        if (chk_boo == post_id) {
+        if (chk_bo == post_id) { 
             chk.style.display = "";
             post_list.removeChild(chk.previousSibling);
         };
     };
-    if (localStorage[chk_boo]) {
-        delete localStorage[chk_boo];
+    if (localStorage[chk_bo]) {
+        delete localStorage[chk_bo];
     };
     post_list.removeChild(post_wrapper);
 }
 
 var post_chk = function() {
-    post_ctrls = document.getElementsByClassName("post_controls");
-    for (i=0; i<post_ctrls.length; i++) {
-        blk_chk = post_ctrls[i].parentNode;
-        boo_chk = blk_chk.parentNode;
-        if (localStorage[boo_chk.getAttribute("data-reblog-key")] && boo_chk.style.display != "none") {
-            ctrl_div = blk_chk.getElementsByClassName("post_controls");
-            blk_post(ctrl_div[0]);
+    posts = document.getElementsByClassName("post_wrapper"); 
+    for (i=0; i<posts.length; i++) {
+        blk_chk = posts[i].parentNode;
+        if (localStorage[blk_chk.getAttribute("data-reblog-key")] && blk_chk.style.display != "none") { 
+            blk_post(posts[i]);
         }
     };
 }
