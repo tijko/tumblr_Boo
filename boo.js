@@ -5,7 +5,7 @@
 
 var tumblr_boo = function() {
     post_ctrls = document.getElementsByClassName("post_controls_inner");
-// grab all post_wrappers and then loop through those grabbing post_controls_inner
+    post_ids = document.getElementsByClassName("post_wrapper");
     for (i=0; i<post_ctrls.length; i++) {
         boo_cls = post_ctrls[i].getElementsByClassName("post_control Boo!");
         if (boo_cls.length < 1) {
@@ -14,15 +14,15 @@ var tumblr_boo = function() {
             boo.className = "post_control Boo!";
             boo.innerText +=  "Boo!";
             boo.href = 'javascript:';
+            boo.id = post_ids[i].parentNode.getAttribute("data-reblog-key");
             boo.onclick = function() {
-                // use this.getElement ....
-                post_div = this.parentNode;
-                post = post_div.parentNode;
-                _post = post.parentNode;
-                _post_ = _post.parentNode;
-                boo_key = _post_.parentNode.getAttribute("data-reblog-key");
-                localStorage[boo_key] = "Booed";
-                blk_post(_post_);
+                posts = document.getElementsByClassName("post_wrapper");
+                for (i=0; i<posts.length; i++) {
+                    if (this.id === posts[i].parentNode.getAttribute("data-reblog-key")) {
+                        blk_post(posts[i]);
+                    }
+                }
+                localStorage[this.id] = "Booed";
                 post_chk();
             }
             post_ctrls[i].appendChild(boo);
