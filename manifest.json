@@ -7,10 +7,14 @@
     "content_scripts": [
     {
         "matches": ["http://www.tumblr.com/dashboard*"],
-        "js":["boo.js"]
+        "js":["boo.js"],
+        "css":["boo.css"]
     }
     ],
     
-    "permissions": ["storage"]
+    "permissions": ["storage"],
+    "web_accessible_resources":[
+        "images/boo.png"
+    ]
 }
 
