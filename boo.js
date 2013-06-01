@@ -39,6 +39,7 @@ var blk_post = function(post) {
 
     blk_div = document.createElement("div");
     blk_div.className = "blocked_post_div";
+    blk_div.id = boo_post.getAttribute("data-reblog-key");
     blk_div.style.border = "1px";
     blk_div.style.height = "45px";
     blk_div.style.textAlign = "center";
@@ -70,25 +71,20 @@ var blk_post = function(post) {
 }
 
 var show_post = function(post) {
-    post_wrapper = post.parentNode;
-    post_list = post_wrapper.parentNode;
-    post_wrapper.nextSibling.style.display = "";
-    chk_boo = post_wrapper.nextSibling;
-    chk_bo = chk_boo.firstElementChild.getAttribute("data-reblog-key");
-    post_wraps = post_list.getElementsByClassName("post_wrapper");
-    for (i=0; i<post_wraps.length; i++) {
-        chk = post_wraps[i].parentNode;
-        window.alert(chk.className);
-        post_id = chk.getAttribute("data-reblog-key");
-        if (chk_bo == post_id) { 
-            chk.style.display = "";
-            post_list.removeChild(chk.previousSibling);
+    posts = document.getElementsByClassName("post_wrapper");
+    post_containers = document.getElementsByClassName("post_container");
+    post_list = document.getElementById("posts");
+    for (i=0; i<posts.length; i++) {
+        post_chk = posts[i].parentNode;
+        if (post_chk.getAttribute("data-reblog-key") === post.id) { 
+            post_chk.style.display = "";
+            post_list.removeChild(post_chk.parentNode.previousSibling);
+            
         };
     };
-    if (localStorage[chk_bo]) {
-        delete localStorage[chk_bo];
+    if (localStorage[post.id]) {
+        delete localStorage[post.id];
     };
-    post_list.removeChild(post_wrapper);
 }
 
 var post_chk = function() {
