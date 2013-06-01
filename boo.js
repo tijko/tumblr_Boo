@@ -7,10 +7,10 @@ var tumblr_boo = function() {
     post_ctrls = document.getElementsByClassName("post_controls_inner");
     post_ids = document.getElementsByClassName("post_wrapper");
     for (i=0; i<post_ctrls.length; i++) {
-        boo_cls = post_ctrls[i].getElementsByClassName("post_control Boo!");
+        boo_cls = post_ctrls[i].getElementsByClassName("boo_post_control");
         if (boo_cls.length < 1) {
             boo = document.createElement("div");
-            boo.className = "post_control Boo!";
+            boo.className = "boo_post_control";
             boo.title = "Block";
             boo.id = post_ids[i].parentNode.getAttribute("data-reblog-key");
             boo.onclick = function() {
