@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Icon Creator",
-    "description": "Creates an icon",
+    "name": "Tumblr Boo!",
+    "description": "Blocks 'booed' posts from your tumblr dashboard",
     "version": "1.0",
 
     "content_scripts": [
