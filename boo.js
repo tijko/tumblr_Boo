@@ -3,6 +3,16 @@
 //
 
 
+var post_chk = function() {
+    posts = document.getElementsByClassName("post_wrapper");
+    for (i=0; i<posts.length; i++) {
+        blk_chk = posts[i].parentNode;
+        if (localStorage[blk_chk.getAttribute("data-reblog-key")] && blk_chk.style.display != "none") {
+            blk_post(posts[i]);
+        }
+    };
+}
+
 var tumblr_boo = function() {
     post_ctrls = document.getElementsByClassName("post_controls_inner");
     post_ids = document.getElementsByClassName("post_wrapper");
@@ -32,39 +42,23 @@ var tumblr_boo = function() {
 var blk_post = function(post) {
     boo_post = post.parentNode;
     blk_li = document.createElement("li");
-    blk_li.style.boxShadow = "3px 3px 3px black";
-    blk_li.className = "blocked_post_li";
+    blk_li.className = "boo_post_li";
 
     blk_div = document.createElement("div");
-    blk_div.className = "blocked_post_div";
+    blk_div.className = "boo_post_div";
     blk_div.id = boo_post.getAttribute("data-reblog-key");
-    blk_div.style.border = "1px";
-    blk_div.style.height = "45px";
-    blk_div.style.textAlign = "center";
-    blk_div.style.backgroundColor = "#335577";
-    blk_div.style.margin = "20px 0 20px 0";
-    blk_div.style.borderRadius = "5px";
-    blk_div.style.color = "#aaaaaa";
-
-    unblk_btn = document.createElement("button");
-    unblk_btn.style.cssFloat = "left";
-    unblk_btn.onclick = function() {
-        show_post(this.parentNode);
-    }
-    blk_div.appendChild(unblk_btn);
 
     blk_msg = document.createElement("p");
+    blk_msg.className = "boo_post_p";
     blk_msg.innerText += "This Post has been BOO'ed!";
-    blk_msg.style.color = "#aaaaaa";
-    blk_msg.style.fontStyle = "italic";
-    blk_msg.style.fontFamily = "Verdana";
-    blk_msg.style.paddingTop = "10px";
+    blk_msg.onclick = function() {
+        show_post(this.parentNode);
+    }
     blk_div.appendChild(blk_msg);
-
     blk_li.appendChild(blk_div);
 
-    spot = document.getElementById("posts");
-    spot.insertBefore(blk_li, boo_post.parentNode);
+    post_position = document.getElementById("posts");
+    post_position.insertBefore(blk_li, boo_post.parentNode);
     boo_post.style.display = "none";
 }
 
@@ -77,21 +71,10 @@ var show_post = function(post) {
         if (post_chk.getAttribute("data-reblog-key") === post.id) { 
             post_chk.style.display = "";
             post_list.removeChild(post_chk.parentNode.previousSibling);
-            
         };
     };
     if (localStorage[post.id]) {
         delete localStorage[post.id];
-    };
-}
-
-var post_chk = function() {
-    posts = document.getElementsByClassName("post_wrapper"); 
-    for (i=0; i<posts.length; i++) {
-        blk_chk = posts[i].parentNode;
-        if (localStorage[blk_chk.getAttribute("data-reblog-key")] && blk_chk.style.display != "none") { 
-            blk_post(posts[i]);
-        }
     };
 }
 
