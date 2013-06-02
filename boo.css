@@ -9,3 +9,25 @@ div.boo_post_control {
     opacity: .35;
     cursor: pointer;
 }
+
+div.boo_post_div {
+    border: 1px;
+    height: 45px;
+    text-align: center;
+    background-color: #335577;
+    margin: 20px 0 20px 0;
+    border-radius: 5px;
+    color: #aaaaaa;
+}
+
+li.boo_post_li {
+    box-shadow: 3px 3px 3px black;
+}
+
+p.boo_post_p {
+    color: #aaaaaa;
+    font-style: italic;
+    font-family: "Verdana";
+    padding-top: 10px;
+    cursor: pointer;
+}
