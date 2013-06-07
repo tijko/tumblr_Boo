@@ -28,9 +28,9 @@ var tumblr_boo = function() {
                 for (i=0; i<posts.length; i++) {
                     if (this.id === posts[i].parentNode.getAttribute("data-reblog-key")) {
                         blk_post(posts[i]);
+                        localStorage[this.id] = "Booed";
                     }
                 }
-                localStorage[this.id] = "Booed";
                 post_chk();
             }
             post_ctrls[i].appendChild(boo);
@@ -60,6 +60,10 @@ var blk_post = function(post) {
     post_position = document.getElementById("posts");
     post_position.insertBefore(blk_li, boo_post.parentNode);
     boo_post.style.display = "none";
+    if (!localStorage[blk_div.id]) {
+        pos = blk_li.offsetTop;
+        window.scrollTo(0, pos - 15);
+    }
 }
 
 var show_post = function(post) {
@@ -67,10 +71,10 @@ var show_post = function(post) {
     post_containers = document.getElementsByClassName("post_container");
     post_list = document.getElementById("posts");
     for (i=0; i<posts.length; i++) {
-        post_chk = posts[i].parentNode;
-        if (post_chk.getAttribute("data-reblog-key") === post.id) { 
-            post_chk.style.display = "";
-            post_list.removeChild(post_chk.parentNode.previousSibling);
+        post_check = posts[i].parentNode;
+        if (post_check.getAttribute("data-reblog-key") === post.id) { 
+            post_check.style.display = "";
+            post_list.removeChild(post_check.parentNode.previousSibling);
         };
     };
     if (localStorage[post.id]) {
