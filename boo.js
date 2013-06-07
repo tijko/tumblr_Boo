@@ -23,11 +23,14 @@ var tumblr_boo = function() {
             boo.className = "boo_post_control";
             boo.title = "Block";
             boo.id = post_ids[i].parentNode.getAttribute("data-reblog-key");
+            post_id = post_ids[i].parentNode.getAttribute("data-post-id");
+            boo.setAttribute("post", post_id);
             boo.onclick = function() {
                 posts = document.getElementsByClassName("post_wrapper");
                 for (i=0; i<posts.length; i++) {
                     if (this.id === posts[i].parentNode.getAttribute("data-reblog-key")) {
-                        blk_post(posts[i]);
+                        booed_id = this.getAttribute("post");
+                        blk_post(posts[i], booed_id);
                         localStorage[this.id] = "Booed";
                     }
                 }
@@ -39,8 +42,9 @@ var tumblr_boo = function() {
     post_chk();
 }
 
-var blk_post = function(post) {
+var blk_post = function(post, post_id) {
     boo_post = post.parentNode;
+    boo_post_id = boo_post.getAttribute("data-post-id");
     blk_li = document.createElement("li");
     blk_li.className = "boo_post_li";
 
@@ -60,7 +64,7 @@ var blk_post = function(post) {
     post_position = document.getElementById("posts");
     post_position.insertBefore(blk_li, boo_post.parentNode);
     boo_post.style.display = "none";
-    if (!localStorage[blk_div.id]) {
+    if (post_id === boo_post_id) {
         pos = blk_li.offsetTop;
         window.scrollTo(0, pos - 15);
     }
