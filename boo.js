@@ -1,5 +1,5 @@
 //tumblr_Boo --> blocks all tumblr posts you don't want showing on your dashboard.
-// this my first small program with javascript, so edits and tips from forks welcome :)
+//this is my first small program with javascript, so edits and tips from forks welcomed :)
 //
 
 
