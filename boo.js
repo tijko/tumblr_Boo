@@ -51,12 +51,14 @@ var blk_post = function(post, post_id) {
     blk_div = document.createElement("div");
     blk_div.className = "boo_post_div";
     blk_div.id = boo_post.getAttribute("data-reblog-key");
+    blk_div.setAttribute("post", boo_post_id); 
 
     blk_msg = document.createElement("p");
     blk_msg.className = "boo_post_p";
     blk_msg.innerText += "This Post has been BOO'ed!";
     blk_msg.onclick = function() {
-        show_post(this.parentNode);
+        blk_id = this.parentNode.getAttribute("post");
+        show_post(this.parentNode, blk_id);
     }
     blk_div.appendChild(blk_msg);
     blk_li.appendChild(blk_div);
@@ -70,7 +72,7 @@ var blk_post = function(post, post_id) {
     }
 }
 
-var show_post = function(post) {
+var show_post = function(post, blk_id) {
     posts = document.getElementsByClassName("post_wrapper");
     post_containers = document.getElementsByClassName("post_container");
     post_list = document.getElementById("posts");
@@ -79,6 +81,10 @@ var show_post = function(post) {
         if (post_check.getAttribute("data-reblog-key") === post.id) { 
             post_check.style.display = "";
             post_list.removeChild(post_check.parentNode.previousSibling);
+            if (post_check.getAttribute("data-post-id") === blk_id) {
+                pos = post_check.offsetTop;
+                window.scrollTo(0, pos - 15);
+            }
         };
     };
     if (localStorage[post.id]) {
